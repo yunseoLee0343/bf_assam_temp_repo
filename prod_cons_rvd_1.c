@@ -17,32 +17,34 @@ void *producer(void *arg) {
     so_t *so = arg;
     int *ret = malloc(sizeof(int));
     FILE *rfile = so->rfile;
+    int i = 0;
     char *line = NULL;
     size_t len = 0;
     ssize_t read = 0;
 
-    // 한 번만 데이터를 읽음
-    read = getdelim(&line, &len, '\n', rfile);
-    pthread_mutex_lock(&so->lock);
-
-    if (read == -1) {
-        so->line = NULL; // 파일의 끝에 도달
+    while (1) {
+        read = getdelim(&line, &len, '\n', rfile);
+        pthread_mutex_lock(&so->lock);
+        while (so->full) {
+            pthread_cond_wait(&so->cond, &so->lock);
+        }
+        if (read == -1) {
+            so->line = NULL;
+            so->full = 1;
+            pthread_cond_signal(&so->cond);
+            pthread_mutex_unlock(&so->lock);
+            break;
+        }
+        so->linenum = i;
+        so->line = strdup(line);
         so->full = 1;
         pthread_cond_signal(&so->cond);
         pthread_mutex_unlock(&so->lock);
-        free(line);
-        *ret = 0; // 읽은 줄 수를 0으로 설정
-        pthread_exit(ret);
+        i++;
     }
-
-    so->line = strdup(line);
-    so->full = 1;
-    pthread_cond_signal(&so->cond);
-    pthread_mutex_unlock(&so->lock);
     free(line);
-    *ret = 1; // 읽은 줄 수를 1로 설정
-
-    printf("Prod_%x: 1 line\n", (unsigned int)pthread_self());
+    printf("Prod_%x: %d lines\n", (unsigned int)pthread_self(), i);
+    *ret = i;
     pthread_exit(ret);
 }
 
