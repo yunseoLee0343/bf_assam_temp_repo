@@ -5,11 +5,12 @@
 #include <string.h>
 
 typedef struct sharedobject {
-	FILE *rfile;
-	int linenum;
-	char *line;
-	pthread_mutex_t lock;
-	int full;
+    FILE *rfile;
+    int linenum;
+    char *line;
+    pthread_mutex_t lock;
+    pthread_cond_t cond;
+    int full;
 } so_t;
 
 void *producer(void *arg) {
