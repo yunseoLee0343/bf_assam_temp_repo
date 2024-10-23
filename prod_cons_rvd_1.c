@@ -31,14 +31,14 @@ void *producer(void *arg) {
         if (read == -1) {
             so->line = NULL;
             so->full = 1;
-            pthread_cond_signal(&so->cond);
+            pthread_cond_broadcast(&so->cond);
             pthread_mutex_unlock(&so->lock);
             break;
         }
         so->linenum = i;
         so->line = strdup(line);
         so->full = 1;
-        pthread_cond_signal(&so->cond);
+        pthread_cond_broadcast(&so->cond);
         pthread_mutex_unlock(&so->lock);
         i++;
     }
@@ -75,7 +75,7 @@ void *consumer(void *arg) {
         free(so->line); // 메모리 해제
         so->full = 0;   // 데이터 소비 후 상태 업데이트
 
-        pthread_cond_signal(&so->cond); // 생산자에게 신호
+        pthread_cond_broadcast(&so->cond); // 생산자 및 다른 소비자에게 신호
         pthread_mutex_unlock(&so->lock);
         i++;
     }
