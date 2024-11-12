@@ -8,6 +8,9 @@
 #define NUM_CHILDREN 10
 #define TIME_QUANTUM 1
 
+#define NUM_CHILDREN 10
+#define TIME_QUANTUM 1
+
 extern int msgid;
 extern int remaining_quantum[NUM_CHILDREN];
 extern pid_t child_pids[NUM_CHILDREN];
