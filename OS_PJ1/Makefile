@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -g
+CFLAGS = -Wall -g -I./include
 LDFLAGS = -lrt
 
 SRC = src/main.c src/timer.c src/child_process.c src/message_queue.c
