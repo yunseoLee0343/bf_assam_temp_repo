@@ -3,6 +3,7 @@
 #include <sys/time.h>
 #include <signal.h>
 #include "timer.h"
+#include "child_process.h"
 
 #define TIME_QUANTUM 1 // time quantum in seconds
 
