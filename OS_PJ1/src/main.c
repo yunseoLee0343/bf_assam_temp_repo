@@ -4,9 +4,11 @@
 #include <sys/wait.h>
 #include <sys/ipc.h>
 #include <sys/msg.h>
+
 #include "timer.h"
 #include "child_process.h"
 #include "message_queue.h"
+#include "scheduler.h"
 
 int main()
 {
