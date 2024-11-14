@@ -8,11 +8,6 @@
 #include "message_queue.h"
 #include "scheduler.h"
 
-extern int msgid;
-extern int remaining_quantum[NUM_CHILDREN];
-extern pid_t child_pids[NUM_CHILDREN];
-extern int current_child;
-
 void create_children(int num_children, int msgid)
 {
     for (int i = 0; i < num_children; i++)
