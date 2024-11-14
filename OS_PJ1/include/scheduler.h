@@ -6,7 +6,7 @@
 
 extern pid_t child_pids[NUM_CHILDREN];
 extern int remaining_quantum[NUM_CHILDREN];
-extern int current_child = 0;
+extern int current_child;
 extern int msgid;
 
 #endif // SCHEDULER_H
