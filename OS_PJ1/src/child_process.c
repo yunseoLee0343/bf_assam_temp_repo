@@ -3,11 +3,10 @@
 #include <unistd.h>
 #include <sys/msg.h>
 #include <time.h>
+
 #include "child_process.h"
 #include "message_queue.h"
-
-#define NUM_CHILDREN 10
-#define TIME_QUANTUM 1
+#include "scheduler.h"
 
 extern int msgid;
 extern int remaining_quantum[NUM_CHILDREN];
