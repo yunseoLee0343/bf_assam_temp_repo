@@ -10,6 +10,11 @@
 #include "message_queue.h"
 #include "scheduler.h"
 
+pid_t child_pids[NUM_CHILDREN];
+int remaining_quantum[NUM_CHILDREN];
+int current_child = 0;
+int msgid;
+
 int main()
 {
     // Signal handler for SIGALRM
