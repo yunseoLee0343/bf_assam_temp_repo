@@ -1,3 +1,5 @@
+# 
+
 CC = gcc
 CFLAGS = -Wall -g -I./include
 LDFLAGS = -lrt
@@ -9,10 +11,10 @@ EXEC = scheduler
 all: $(EXEC)
 
 $(EXEC): $(OBJ)
-    $(CC) $(OBJ) -o $(EXEC) $(LDFLAGS)
+	$(CC) $(OBJ) -o $(EXEC) $(LDFLAGS)
 
-%.o: %.c
-    $(CC) $(CFLAGS) -c $<
+src/%.o: src/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-    rm -f $(OBJ) $(EXEC)
+	rm -f $(OBJ) $(EXEC)
